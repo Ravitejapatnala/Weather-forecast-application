@@ -1,0 +1,52 @@
+/* Media queries */
+
+@media screen and (max-width: 375px){
+    #heading{
+        text-align: center;
+        font-size: 20px;
+    }
+
+    #input{
+        padding: 3px;
+    }
+
+    #city-btn{
+        padding: 5px;
+        font-size: 15px;
+    }
+
+    #current-btn{
+        font-size: 15px;
+        padding: 5px;
+    }
+
+    #container{
+        text-align: center;
+        padding: 20px;
+    }
+
+    #forecast-container{
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+    }
+}
+
+@media (min-width: 375px) and (max-width: 768px){
+    #heading{
+        font-size: 20px;
+        text-align: left;
+    }
+
+    #forecast-container{
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+@media (min-width: 769px) and (max-width: 1024px){
+    #forecast-container{
+        gap: 1px;
+    }
+}
