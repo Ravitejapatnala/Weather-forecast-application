@@ -17,4 +17,6 @@ This project is a web application that allows users to track the weather conditi
 2. Search City Weather button: Upon clicking of this button a function call is made where it takes the entered city and places it in the API key which we have from OpenWeatherMap website.
 3. If the city name is valid then the temperature, wind speed, humidity of the specified city will be displayed for today and the next 5 days.
 4. Search Current Location weather: Upon clicking on this button a function call is made where it gets the latitude and longitude of the current location and places it in the API key which we got from OpenWeatherMap website followed by displaying the temperature, wind speed, humidity of the specified city will be displayed for today and the next 5 days.
-5. The user interface of the application gets adjusted for different screen sizes because of media queries. 
+5. The user interface of the application gets adjusted for different screen sizes because of media queries.
+
+## GITHUB REPO LINK: https://github.com/Ravitejapatnala/Weather-forecast-application
