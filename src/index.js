@@ -75,7 +75,7 @@ async function cityWeather(){
         populateRecentCities();
         
     } catch (error) {
-        container.innerHTML= `Error Finding City Weather: ${error}`
+        container.innerHTML= `<div class="bg-red-100 text-red-800 p-4 rounded-md">${error.message}</div>`
         console.log(error);
     }
 
@@ -101,7 +101,7 @@ async function currentWeather(){
                 console.log(forecastData);
                 displayForecast(forecastData);
             } catch (error) {
-                forecastContainer.innerHTML= `Error Finding City Weather: ${error}`
+                forecastContainer.innerHTML= `<div class="bg-red-100 text-red-800 p-4 rounded-md">${error.message}</div>`
                 console.log(error);
             }
         })
