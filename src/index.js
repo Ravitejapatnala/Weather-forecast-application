@@ -4,15 +4,19 @@ const currentButton= document.getElementById('current-btn');
 const container= document.getElementById('container');
 const forecastContainer= document.getElementById('forecast-container');
 const recentCitiesDropdown= document.getElementById('recent-cities');
+
+//API KEY
 const apiKey= '881f06fb59f5cbc7b91ea804bc703774';
 
 //display weather details
 function displayWeather(data){
     container.innerHTML= `
-    <h2>${data.name}, ${data.sys.country}</h2>
-    <p>Temperature: ${data.main.temp} C</p>
-    <p>Humidity: ${data.main.humidity} %</p>
-    <p>Wind Speed: ${data.wind.speed} m/s</p>`
+    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-300">
+        <h2 class= "text-2xl font-semibold mb-2 text-gray-800">${data.name}, ${data.sys.country}</h2>
+        <p class="text-lg mb-1 text-gray-600">Temperature:<span class="font-semibold text-blue-700">${data.main.temp} C</span></p>
+        <p class="text-lg mb-1 text-gray-600">Humidity:<span class="font-semibold text-blue-700">${data.main.humidity} %</span></p>
+        <p class="text-lg mb-1 text-gray-600">Wind Speed:<span class="font-semibold text-blue-700">${data.wind.speed} m/s</span></p>
+    </div>`
 }
 
 //function to format date
@@ -26,19 +30,19 @@ function formatDate(timestamp){
 
 //display 5 day forecast
 function displayForecast(data){
-    forecastContainer.innerHTML= `<h2>5-Day Forecast:</h2>`;
+    forecastContainer.innerHTML= "";
     for(let i=0;i<data.list.length;i=i+8){
         const dayData= data.list[i];
         const date= formatDate(dayData.dt);
         const temp= dayData.main.temp;
         const description= dayData.weather[0].description;
         forecastContainer.innerHTML += `
-        <div>
-            <h3>${date}</h3>
-            <p>Temperature: ${temp} C</p>
-            <p>Humidity: ${dayData.main.humidity}</p>
-            <p>Wind Speed: ${dayData.wind.speed}</p>
-            <p>${description}</p>
+        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-300">
+            <h3 class="text-xl font-semibold mb-2 text-gray-800 border-b-2 border-blue-200 pb-2">${date}</h3>
+            <p class="text-lg mb-1 text-gray-600 my-2">Temperature: <span class="font-semibold text-blue-700">${temp} C </span> </p>
+            <p class="text-lg mb-1 text-gray-600 my-2 bg-gray-100 p-2 rounded-md">Humidity: <span class="font-semibold text-blue-700"> ${dayData.main.humidity} % </span> </p>
+            <p class="text-lg mb-1 text-gray-600 my-2">Wind Speed: <span class="font-semibold text-blue-700"> ${dayData.wind.speed} m/s </span> </p>
+            <p class="text-lg mb-1 text-gray-600 my-2 bg-gray-100 p-2 rounded-md capitalize">${description}</p>
         </div>`
     }
 }
@@ -59,6 +63,7 @@ async function cityWeather(){
         const weatherResponse= await fetch(weatherUrl);
         const weatherData= await weatherResponse.json();
         console.log(weatherData);
+        input.value="";
         displayWeather(weatherData);
 
         const forecastResponse= await fetch(forecastUrl);
@@ -66,8 +71,9 @@ async function cityWeather(){
         console.log(forecastData);
         displayForecast(forecastData);
 
-        storeCity(city);
+        storeCity(city.toLowerCase());
         populateRecentCities();
+        
     } catch (error) {
         container.innerHTML= `Error Finding City Weather: ${error}`
         console.log(error);
