@@ -2,8 +2,9 @@ const input= document.getElementById('input');
 const cityButton= document.getElementById('city-btn');
 const currentButton= document.getElementById('current-btn');
 const container= document.getElementById('container');
-const apiKey= '881f06fb59f5cbc7b91ea804bc703774';
 const forecastContainer= document.getElementById('forecast-container');
+const recentCitiesDropdown= document.getElementById('recent-cities');
+const apiKey= '881f06fb59f5cbc7b91ea804bc703774';
 
 //display weather details
 function displayWeather(data){
@@ -64,6 +65,9 @@ async function cityWeather(){
         const forecastData= await forecastResponse.json();
         console.log(forecastData);
         displayForecast(forecastData);
+
+        storeCity(city);
+        populateRecentCities();
     } catch (error) {
         container.innerHTML= `Error Finding City Weather: ${error}`
         console.log(error);
@@ -100,6 +104,38 @@ async function currentWeather(){
         alert('Geo Location is not supported in this browser.');
     }
 }
+
+function storeCity(city){
+    let cities= JSON.parse(localStorage.getItem('recentCities'))||[];
+    if(!cities.includes(city)){
+        cities.push(city);
+        localStorage.setItem('recentCities', JSON.stringify(cities));
+    }
+}
+
+function populateRecentCities(){
+    let cities= JSON.parse(localStorage.getItem('recentCities'))||[];
+    if(cities.length>0){
+        recentCitiesDropdown.style.display='block';
+        recentCitiesDropdown.innerHTML= `<option value="">Select a city</option>`;
+        cities.forEach(city=>{
+            let option = document.createElement('option');
+            option.value= city;
+            option.textContent= city;
+            recentCitiesDropdown.appendChild(option);
+        })
+    }
+    else{
+        recentCitiesDropdown.style.display='none';
+    }
+}
+
+recentCitiesDropdown.addEventListener('change', ()=>{
+    if(recentCitiesDropdown.value){
+        input.value= recentCitiesDropdown.value;
+        cityWeather();
+    }
+})
 
 cityButton.addEventListener('click', cityWeather);
 currentButton.addEventListener('click', currentWeather);
